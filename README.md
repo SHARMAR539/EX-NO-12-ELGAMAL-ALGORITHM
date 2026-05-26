@@ -25,8 +25,55 @@ To Implement ELGAMAL ALGORITHM
 
 ## Program:
 
+```
+  #include <stdio.h> 
+          #include <math.h> 
+          long long mod_pow(long long base, long long exp, long long mod) { 
+         long long result = 1; 
+         base = base % mod; 
+         while (exp > 0) { 
+               if (exp % 2 == 1) 
+               result = (result * base) % mod; 
+        exp = exp >> 1; 
+        base = (base * base) % mod; 
+    } 
+    return result; 
+} 
+long long modinv(long long a, long long p) { 
+    return mod_pow(a, p - 2, p); 
+} 
+int main() { 
+    long long p, g, x, y, k, m, c1, c2, s, decrypted; 
+    printf("Enter a large prime number (p): "); 
+    scanf("%lld", &p); 
+    printf("Enter primitive root modulo p (g): "); 
+scanf("%lld", &g); 
+printf("Enter private key (x): "); 
+scanf("%lld", &x); 
+y = mod_pow(g, x, p); 
+printf("Public key (p, g, y): (%lld, %lld, %lld)\n", p, g, y); 
+printf("\n--- Encryption ---\n"); 
+printf("Enter message (m): "); 
+scanf("%lld", &m); 
+printf("Enter random integer (k): "); 
+scanf("%lld", &k); 
+c1 = mod_pow(g, k, p); 
+c2 = (m * mod_pow(y, k, p)) % p; 
+printf("Ciphertext: (c1, c2) = (%lld, %lld)\n", c1, c2); 
+printf("\n--- Decryption ---\n"); 
+s = mod_pow(c1, x, p); 
+decrypted = (c2 * modinv(s, p)) % p; 
+printf("Decrypted message: %lld\n", decrypted); 
+return 0; 
+}
+
+```
+
 
 ## Output:
+
+<img width="1637" height="964" alt="image" src="https://github.com/user-attachments/assets/7c361c4a-a537-479e-9cee-fc4d582eaa3a" />
+
 
 
 ## Result:
